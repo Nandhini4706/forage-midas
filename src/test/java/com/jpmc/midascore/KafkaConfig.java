@@ -18,14 +18,15 @@ public class KafkaConfig {
     @Bean
     public KafkaTemplate<String, Transaction> kafkaTemplate() {
 
-        Map<String, Object> config = new HashMap<>();
+        Map<String, Object> props = new HashMap<>();
 
-        config.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-        config.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
+        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
 
-        DefaultKafkaProducerFactory<String, Transaction> producerFactory =
-                new DefaultKafkaProducerFactory<>(config);
+        DefaultKafkaProducerFactory<String, Transaction> factory =
+                new DefaultKafkaProducerFactory<>(props);
 
-        return new KafkaTemplate<>(producerFactory);
+        return new KafkaTemplate<>(factory);
     }
 }
